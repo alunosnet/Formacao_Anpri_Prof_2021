@@ -8,6 +8,7 @@ public class MenuPrincipal : MonoBehaviour
     private void Start()
     {
         Time.timeScale = 1;
+        MenuDefinicoes.LoadSettings();
     }
     public void Jogar()
     {

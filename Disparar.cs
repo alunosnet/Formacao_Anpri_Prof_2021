@@ -10,6 +10,7 @@ public class Disparar : MonoBehaviour
     [SerializeField] int _dano = 10;
     [SerializeField] float _forca = 50;
     AudioSource _audioSource;
+    bool Disparou = false;
 
     // Start is called before the first frame update
     void Start()
@@ -23,11 +24,18 @@ public class Disparar : MonoBehaviour
         if (Time.timeScale == 0) return;
         if (CrossPlatformInputManager.GetButtonDown("Fire1"))
         {
+            Disparou = true;
+        }
+    }
+    private void FixedUpdate()
+    {
+        if (Disparou)
+        {
             if (_audioSource != null)
                 _audioSource.Play();
             Vector3 origem = _fpsCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.5f));
             RaycastHit hit;
-            if(Physics.Raycast(origem,_fpsCamera.transform.forward,out hit, _distancia))
+            if (Physics.Raycast(origem, _fpsCamera.transform.forward, out hit, _distancia))
             {
                 var objeto = hit.collider.GetComponent<Vida>();
                 if (objeto != null)
@@ -40,6 +48,7 @@ public class Disparar : MonoBehaviour
                     rb.AddForceAtPosition(direcao.normalized * _forca, hit.point);
                 }
             }
+            Disparou = false;
         }
     }
 }
