@@ -23,7 +23,7 @@ public class MenuJogo : MonoBehaviour
     }
     public void NivelSeguinte()
     {
-        if (SceneManager.sceneCountInBuildSettings > SceneManager.GetActiveScene().buildIndex - 1)
+        if (SceneManager.sceneCountInBuildSettings > SceneManager.GetActiveScene().buildIndex + 1)
         {
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
         }
