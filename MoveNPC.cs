@@ -5,6 +5,7 @@ using UnityEngine.AI;
 
 public class MoveNPC : MonoBehaviour
 {
+    public enum NPCEstados { Idle = 0, Patrulha = 1, Atacar = 2 };
     [SerializeField] Transform[] Pontos;
     [SerializeField] int ProximoPonto = 0;
     [SerializeField] float Velocidade = 3;
@@ -14,7 +15,7 @@ public class MoveNPC : MonoBehaviour
     Renderer _renderer;
     GameObject _player;
     NavMeshAgent _navmeshagent;
-    public int estado = 0; //0 - idle; 1-patrulha; 2-perseguir
+    public NPCEstados estado = NPCEstados.Idle; 
     [SerializeField] bool inimigo = false;
     [SerializeField] float DistanciaAtaque = 1;
     Animator _animator;
@@ -44,9 +45,9 @@ public class MoveNPC : MonoBehaviour
         }
         if (_vida != null && _vida.GetVida() <= 0) return;
         //idle
-        if (estado == 0)
+        if (estado == NPCEstados.Idle)
             return;
-        if (estado == 1)
+        if (estado == NPCEstados.Patrulha)
         {
             //distancia
             if (Vector3.Distance(transform.position, Pontos[ProximoPonto].position) < DistanciaMinima)
@@ -83,20 +84,21 @@ public class MoveNPC : MonoBehaviour
             _navmeshagent.SetDestination(_player.transform.position);
             if (_animator != null)
                 _animator.SetFloat("velocidade", _navmeshagent.velocity.magnitude);
-            estado = 2;
+            estado = NPCEstados.Atacar;
         }
         else
         {
             _renderer.material.color = corBase;
-            estado = 1;
+            estado = NPCEstados.Patrulha;
         }
-        if (estado == 2)
+        if (estado == NPCEstados.Atacar)
         {
             if (Vector3.Distance(transform.position, _player.transform.position) < DistanciaAtaque)
             {
                 _navmeshagent.isStopped = true;
                 if (_animator != null)
                     _animator.SetTrigger("atacar");
+                
             }
         }
     }
