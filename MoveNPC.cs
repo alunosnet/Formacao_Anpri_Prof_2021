@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class MoveNPC : MonoBehaviour
 {
-    public enum NPCEstados { Idle = 0, Patrulha = 1, Atacar = 2 };
+    public enum NPCEstados { Idle = 0, Patrulha = 1, Atacar = 2, Morto=3 };
     [SerializeField] Transform[] Pontos;
     [SerializeField] int ProximoPonto = 0;
     [SerializeField] float Velocidade = 3;
@@ -43,7 +43,7 @@ public class MoveNPC : MonoBehaviour
             Debug.Log("Tem de indicar os pontos a percorrer no Npc " + this.transform.name);
             return;
         }
-        if (_vida != null && _vida.GetVida() <= 0) return;
+        if (_vida != null && _vida.GetVida() <= 0 || estado==NPCEstados.Morto) return;
         //idle
         if (estado == NPCEstados.Idle)
             return;

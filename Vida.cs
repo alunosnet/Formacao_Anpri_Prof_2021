@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 using UnityEngine.UI;
 
 public class Vida : MonoBehaviour
@@ -27,7 +28,14 @@ public class Vida : MonoBehaviour
         if (vida <= 0)
         {
             //Debug.Log("Morreu!");
-            Destroy(gameObject.transform.root.gameObject);
+            if(transform.tag.Equals("Player"))
+                Destroy(gameObject.transform.root.gameObject);
+            if(transform.tag.Equals("NPC"))
+            {
+                transform.GetComponent<MoveNPC>().estado = MoveNPC.NPCEstados.Morto;
+                transform.GetComponent<NavMeshAgent>().isStopped = true;
+                transform.GetComponentInChildren<Animator>().SetBool("morre", true);
+            }
         }
     }
     public void GanhaVida(int valor)

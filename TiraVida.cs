@@ -23,6 +23,8 @@ public class TiraVida : MonoBehaviour
             {
                 vida.TiraVida(ValorVidaATirar);
             }
+            if(transform.tag.Equals("Bola")) Destroy(this.gameObject);
         }
+        
     }
 }
