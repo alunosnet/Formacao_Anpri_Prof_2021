@@ -34,6 +34,7 @@ public class Vida : MonoBehaviour
             {
                 transform.GetComponent<MoveNPC>().estado = MoveNPC.NPCEstados.Morto;
                 transform.GetComponent<NavMeshAgent>().isStopped = true;
+                Destroy(transform.GetComponent<CapsuleCollider>()); //para não tirar vida quando está morto
                 transform.GetComponentInChildren<Animator>().SetBool("morre", true);
             }
         }
