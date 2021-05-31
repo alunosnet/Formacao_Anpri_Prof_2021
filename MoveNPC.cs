@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class MoveNPC : MonoBehaviour
 {
     public enum NPCEstados { Idle = 0, Patrulha = 1, Atacar = 2, Morto=3 };
-    [SerializeField] Transform[] Pontos;
+    [SerializeField]public Transform[] Pontos;
     [SerializeField] int ProximoPonto = 0;
     [SerializeField] float Velocidade = 3;
     [SerializeField] float DistanciaMinima = 1;
